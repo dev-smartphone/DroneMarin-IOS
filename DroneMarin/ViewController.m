@@ -15,6 +15,7 @@
 @implementation ViewController
 @synthesize mapView;
 CLLocationCoordinate2D dest[2];
+bool firstDraw, secondDraw;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -27,12 +28,8 @@ CLLocationCoordinate2D dest[2];
     CLLocationCoordinate2D userLocation = CLLocationCoordinate2DMake(46.134739, -1.150361);
     CLLocationDistance distance = 50*50;
     [mapView setRegion:MKCoordinateRegionMakeWithDistance(userLocation, distance, distance)];
-    CLLocationCoordinate2D userLocation2 = CLLocationCoordinate2DMake(46.137118, -1.149910);
-    
-    dest[0] = userLocation;
-    dest[1] = userLocation2;
-    [self draw];
-    
+    firstDraw = true;
+    secondDraw = true;
     //Add onTap
      UITapGestureRecognizer *tgr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureHandler:)];
     [mapView addGestureRecognizer:tgr];
@@ -44,10 +41,19 @@ CLLocationCoordinate2D dest[2];
     CGPoint touchPoint = [tgr locationInView:mapView];
     CLLocationCoordinate2D touchMapCoordinate = [mapView convertPoint:touchPoint toCoordinateFromView:mapView];
     
-    CLLocationCoordinate2D transition = dest[1];
-    dest[0] = transition;
-    dest[1] = touchMapCoordinate;
-    [self draw];
+    if (firstDraw) {
+        dest[0] = touchMapCoordinate;
+        firstDraw = false;
+    } else if (secondDraw) {
+        dest[1] = touchMapCoordinate;
+        secondDraw = false;
+        [self draw];
+    } else {
+        dest[0] = dest[1];
+        dest[1] = touchMapCoordinate;
+        [self draw];
+    }
+    
     MKPointAnnotation *point1 = [[MKPointAnnotation alloc]init];
     point1.coordinate = touchMapCoordinate;
     [mapView addAnnotation:point1];}
