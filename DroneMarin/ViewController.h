@@ -12,8 +12,7 @@
 @interface ViewController : UIViewController{
     IBOutlet MKMapView *mapView;
 }
+
 @property MKMapView *mapView;
-@property MKPolyline *polyline;
-@property MKPolylineView *lineView;
 @end
 
