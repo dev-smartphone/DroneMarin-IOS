@@ -40,36 +40,38 @@ bool firstDraw, secondDraw;
     CGPoint touchPoint = [tgr locationInView:mapView];
     CLLocationCoordinate2D touchMapCoordinate = [mapView convertPoint:touchPoint toCoordinateFromView:mapView];
     
-    if (firstDraw) {
-        dest[0] = touchMapCoordinate;
-        firstDraw = false;
-    } else if (secondDraw) {
-        dest[1] = touchMapCoordinate;
-        secondDraw = false;
-        [self draw];
-    } else {
-        dest[0] = dest[1];
-        dest[1] = touchMapCoordinate;
-        [self draw];
-    }
-    [self createParametersWaypoints];
     
-    MKPointAnnotation *point1 = [[MKPointAnnotation alloc]init];
-    point1.coordinate = touchMapCoordinate;
-    [mapView addAnnotation:point1];
-}
-
-- (void)createParametersWaypoints {
+    
     UIAlertController *ui = [UIAlertController alertControllerWithTitle:@"Propriété du waypoint" message:nil preferredStyle:UIAlertControllerStyleAlert];
     
     UIAlertAction *okButton = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
         
+        //A l'appuie du boutton ok
+        MKPointAnnotation *point1 = [[MKPointAnnotation alloc]init];
+        point1.coordinate = touchMapCoordinate;
+        [mapView addAnnotation:point1];
+        if (firstDraw) {
+            dest[0] = touchMapCoordinate;
+            firstDraw = false;
+        } else if (secondDraw) {
+            dest[1] = touchMapCoordinate;
+            secondDraw = false;
+            [self draw];
+        } else {
+            dest[0] = dest[1];
+            dest[1] = touchMapCoordinate;
+            [self draw];
+        }
+        
     }];
+    
     UIAlertAction *annulerButton = [UIAlertAction actionWithTitle:@"Annuler" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
         
     }];
+    
     [ui addAction:annulerButton];
     [ui addAction:okButton];
+    
     [self presentViewController:ui animated:YES completion:nil];
 }
 
