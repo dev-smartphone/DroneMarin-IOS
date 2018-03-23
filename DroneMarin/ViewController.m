@@ -20,8 +20,6 @@ bool firstDraw, secondDraw;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    //[self.mapView removeOverlay:self.polyline];
-    
     mapView.delegate =(id)self;
     
     //Set map on a specific position and zoom
@@ -30,6 +28,7 @@ bool firstDraw, secondDraw;
     [mapView setRegion:MKCoordinateRegionMakeWithDistance(userLocation, distance, distance)];
     firstDraw = true;
     secondDraw = true;
+    
     //Add onTap
      UITapGestureRecognizer *tgr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureHandler:)];
     [mapView addGestureRecognizer:tgr];
@@ -53,10 +52,26 @@ bool firstDraw, secondDraw;
         dest[1] = touchMapCoordinate;
         [self draw];
     }
+    [self createParametersWaypoints];
     
     MKPointAnnotation *point1 = [[MKPointAnnotation alloc]init];
     point1.coordinate = touchMapCoordinate;
-    [mapView addAnnotation:point1];}
+    [mapView addAnnotation:point1];
+}
+
+- (void)createParametersWaypoints {
+    UIAlertController *ui = [UIAlertController alertControllerWithTitle:@"Propriété du waypoint" message:nil preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *okButton = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+        
+    }];
+    UIAlertAction *annulerButton = [UIAlertAction actionWithTitle:@"Annuler" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+        
+    }];
+    [ui addAction:annulerButton];
+    [ui addAction:okButton];
+    [self presentViewController:ui animated:YES completion:nil];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -64,8 +79,7 @@ bool firstDraw, secondDraw;
 }
 
 //Function to draw the line between waypoints
--(void)draw{
-    
+-(void)draw {
     MKPolyline *polyline = [MKPolyline polylineWithCoordinates:dest count:2];
     [self.mapView addOverlay:polyline];
 }
