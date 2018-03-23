@@ -44,6 +44,11 @@ bool firstDraw, secondDraw;
     
     UIAlertController *ui = [UIAlertController alertControllerWithTitle:@"Propriété du waypoint" message:nil preferredStyle:UIAlertControllerStyleAlert];
     
+    [ui addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+        textField.placeholder = @"Vitesse";
+        textField.clearButtonMode = UITextFieldViewModeWhileEditing;
+    }];
+    
     UIAlertAction *okButton = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
         
         //A l'appuie du boutton ok
@@ -62,6 +67,11 @@ bool firstDraw, secondDraw;
             dest[1] = touchMapCoordinate;
             [self draw];
         }
+        
+        //Récupération de la vitesse
+        NSArray *textFields = ui.textFields;
+        UITextField *vitesseTextField = textFields[0];
+        NSString *vitesse = vitesseTextField.text;
         
     }];
     
