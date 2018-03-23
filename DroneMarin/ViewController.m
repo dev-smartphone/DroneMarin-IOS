@@ -75,6 +75,27 @@ bool firstDraw, secondDraw;
         
     }];
     
+    __weak typeof (self) weakSelf = self;
+    [ui addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+        UIButton *checkbox = [UIButton buttonWithType:UIButtonTypeCustom];
+        [checkbox setFrame:CGRectMake(2, 2, 18, 18)];
+        [checkbox setTag:1];
+        [checkbox addTarget:weakSelf action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        
+        [checkbox.imageView setContentMode:UIViewContentModeScaleAspectFit];
+        [checkbox setImage:[UIImage imageNamed:@"checkbox_checked.png"] forState:UIControlStateSelected];
+        [checkbox setImage:[UIImage imageNamed:@"checkbox_checked.png"] forState:UIControlStateHighlighted];
+        [checkbox setImage:[UIImage imageNamed:@"checkbox_unchecked.png"] forState:UIControlStateNormal];
+        [checkbox setAdjustsImageWhenHighlighted:TRUE];
+        
+        [textField setClearButtonMode:UITextFieldViewModeAlways];
+        [textField setRightViewMode:UITextFieldViewModeAlways];
+        [textField setRightView:checkbox];
+        
+        [textField setTag:-1];
+        [textField setText:@"Prise d'image"];
+    }];
+    
     UIAlertAction *annulerButton = [UIAlertAction actionWithTitle:@"Annuler" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
         
     }];
@@ -83,6 +104,14 @@ bool firstDraw, secondDraw;
     [ui addAction:okButton];
     
     [self presentViewController:ui animated:YES completion:nil];
+}
+
+-(void)buttonPressed:(UIButton*)sender{
+    if (sender.selected) {
+        [sender setSelected:FALSE];
+    } else {
+        [sender setSelected:TRUE];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
