@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		056DBED52068E82A00213377 /* Modele.m in Sources */ = {isa = PBXBuildFile; fileRef = 056DBED42068E82A00213377 /* Modele.m */; };
 		F250EB2F20526E0F00DC26B1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F250EB2E20526E0F00DC26B1 /* main.m */; };
 		F250EB3220526E0F00DC26B1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F250EB3120526E0F00DC26B1 /* AppDelegate.m */; };
 		F250EB3520526E0F00DC26B1 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F250EB3420526E0F00DC26B1 /* ViewController.m */; };
@@ -38,6 +39,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		056DBED42068E82A00213377 /* Modele.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Modele.m; sourceTree = "<group>"; };
+		056DBED62068E83400213377 /* Modele.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Modele.h; sourceTree = "<group>"; };
 		F250EB2A20526E0F00DC26B1 /* DroneMarin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DroneMarin.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F250EB2E20526E0F00DC26B1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		F250EB3020526E0F00DC26B1 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -54,7 +57,6 @@
 		F250EB4E20526E0F00DC26B1 /* DroneMarinUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DroneMarinUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F250EB5220526E0F00DC26B1 /* DroneMarinUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DroneMarinUITests.m; sourceTree = "<group>"; };
 		F250EB5420526E0F00DC26B1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F2630F992068DE2A0063DA99 /* Modele.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Modele.h; sourceTree = "<group>"; };
 		F2630F9A2068DE2A0063DA99 /* Waypoints.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Waypoints.h; sourceTree = "<group>"; };
 		F2630F9B2068DE2A0063DA99 /* Waypoints.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Waypoints.m; sourceTree = "<group>"; };
 		F2630F9E2068DE480063DA99 /* minmea.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = minmea.c; path = NmeaParseLib/minmea.c; sourceTree = "<group>"; };
@@ -112,7 +114,6 @@
 			isa = PBXGroup;
 			children = (
 				F2630F9D2068DE340063DA99 /* NmeaParseLib */,
-				F2630F992068DE2A0063DA99 /* Modele.h */,
 				F2630F9A2068DE2A0063DA99 /* Waypoints.h */,
 				F2630F9B2068DE2A0063DA99 /* Waypoints.m */,
 				F250EB3020526E0F00DC26B1 /* AppDelegate.h */,
@@ -124,6 +125,8 @@
 				F250EB3B20526E0F00DC26B1 /* LaunchScreen.storyboard */,
 				F250EB3E20526E0F00DC26B1 /* Info.plist */,
 				F250EB2D20526E0F00DC26B1 /* Supporting Files */,
+				056DBED42068E82A00213377 /* Modele.m */,
+				056DBED62068E83400213377 /* Modele.h */,
 			);
 			path = DroneMarin;
 			sourceTree = "<group>";
@@ -300,6 +303,7 @@
 			files = (
 				F2630F9C2068DE2A0063DA99 /* Waypoints.m in Sources */,
 				F250EB3520526E0F00DC26B1 /* ViewController.m in Sources */,
+				056DBED52068E82A00213377 /* Modele.m in Sources */,
 				F2630FA22068DE480063DA99 /* minmea.c in Sources */,
 				F250EB3220526E0F00DC26B1 /* AppDelegate.m in Sources */,
 				F2630FA32068DE480063DA99 /* parser.c in Sources */,
