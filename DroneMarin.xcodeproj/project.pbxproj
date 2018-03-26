@@ -15,7 +15,8 @@
 		F250EB3D20526E0F00DC26B1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F250EB3B20526E0F00DC26B1 /* LaunchScreen.storyboard */; };
 		F250EB4820526E0F00DC26B1 /* DroneMarinTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F250EB4720526E0F00DC26B1 /* DroneMarinTests.m */; };
 		F250EB5320526E0F00DC26B1 /* DroneMarinUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = F250EB5220526E0F00DC26B1 /* DroneMarinUITests.m */; };
-		F2630F912068CC4C0063DA99 /* NmeaParseLib in Resources */ = {isa = PBXBuildFile; fileRef = F2630F902068CC4C0063DA99 /* NmeaParseLib */; };
+		F2630F972068D18E0063DA99 /* minmea.c in Sources */ = {isa = PBXBuildFile; fileRef = F2630F932068D18E0063DA99 /* minmea.c */; };
+		F2630F982068D18E0063DA99 /* parser.c in Sources */ = {isa = PBXBuildFile; fileRef = F2630F952068D18E0063DA99 /* parser.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,7 +53,10 @@
 		F250EB4E20526E0F00DC26B1 /* DroneMarinUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DroneMarinUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F250EB5220526E0F00DC26B1 /* DroneMarinUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DroneMarinUITests.m; sourceTree = "<group>"; };
 		F250EB5420526E0F00DC26B1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F2630F902068CC4C0063DA99 /* NmeaParseLib */ = {isa = PBXFileReference; lastKnownFileType = folder; path = NmeaParseLib; sourceTree = "<group>"; };
+		F2630F932068D18E0063DA99 /* minmea.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = minmea.c; path = NmeaParseLib/minmea.c; sourceTree = "<group>"; };
+		F2630F942068D18E0063DA99 /* minmea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = minmea.h; path = NmeaParseLib/minmea.h; sourceTree = "<group>"; };
+		F2630F952068D18E0063DA99 /* parser.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = parser.c; path = NmeaParseLib/parser.c; sourceTree = "<group>"; };
+		F2630F962068D18E0063DA99 /* parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = parser.h; path = NmeaParseLib/parser.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,7 +107,7 @@
 		F250EB2C20526E0F00DC26B1 /* DroneMarin */ = {
 			isa = PBXGroup;
 			children = (
-				F2630F902068CC4C0063DA99 /* NmeaParseLib */,
+				F2630F922068D17D0063DA99 /* NmeaParseLib */,
 				F250EB3020526E0F00DC26B1 /* AppDelegate.h */,
 				F250EB3120526E0F00DC26B1 /* AppDelegate.m */,
 				F250EB3320526E0F00DC26B1 /* ViewController.h */,
@@ -141,6 +145,17 @@
 				F250EB5420526E0F00DC26B1 /* Info.plist */,
 			);
 			path = DroneMarinUITests;
+			sourceTree = "<group>";
+		};
+		F2630F922068D17D0063DA99 /* NmeaParseLib */ = {
+			isa = PBXGroup;
+			children = (
+				F2630F932068D18E0063DA99 /* minmea.c */,
+				F2630F942068D18E0063DA99 /* minmea.h */,
+				F2630F952068D18E0063DA99 /* parser.c */,
+				F2630F962068D18E0063DA99 /* parser.h */,
+			);
+			name = NmeaParseLib;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -252,7 +267,6 @@
 				F250EB3D20526E0F00DC26B1 /* LaunchScreen.storyboard in Resources */,
 				F250EB3A20526E0F00DC26B1 /* Assets.xcassets in Resources */,
 				F250EB3820526E0F00DC26B1 /* Main.storyboard in Resources */,
-				F2630F912068CC4C0063DA99 /* NmeaParseLib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -277,8 +291,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F2630F972068D18E0063DA99 /* minmea.c in Sources */,
 				F250EB3520526E0F00DC26B1 /* ViewController.m in Sources */,
 				F250EB3220526E0F00DC26B1 /* AppDelegate.m in Sources */,
+				F2630F982068D18E0063DA99 /* parser.c in Sources */,
 				F250EB2F20526E0F00DC26B1 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
