@@ -44,7 +44,7 @@ uint8_t minmea_checksum(const char *sentence)
 
 bool minmea_check(const char *sentence, bool strict)
 {
-    uint8_t checksum = 0x00;
+    //uint8_t checksum = 0x00;
 
     // Sequence length is limited.
     if (strlen(sentence) > MINMEA_MAX_LENGTH + 3)
@@ -220,7 +220,7 @@ bool minmea_scan(const char *sentence, const char *format, ...)
 
                 if (field) {
                     char *endptr;
-                    value = strtol(field, &endptr, 10);
+                    value = (int)strtol(field, &endptr, 10);
                     if (minmea_isfield(*endptr))
                         goto parse_error;
                 }
@@ -269,9 +269,9 @@ bool minmea_scan(const char *sentence, const char *format, ...)
                     char dArr[] = {field[0], field[1], '\0'};
                     char mArr[] = {field[2], field[3], '\0'};
                     char yArr[] = {field[4], field[5], '\0'};
-                    d = strtol(dArr, NULL, 10);
-                    m = strtol(mArr, NULL, 10);
-                    y = strtol(yArr, NULL, 10);
+                    d = (int)strtol(dArr, NULL, 10);
+                    m = (int)strtol(mArr, NULL, 10);
+                    y = (int)strtol(yArr, NULL, 10);
                 }
 
                 date->day = d;
@@ -293,9 +293,9 @@ bool minmea_scan(const char *sentence, const char *format, ...)
                     char hArr[] = {field[0], field[1], '\0'};
                     char iArr[] = {field[2], field[3], '\0'};
                     char sArr[] = {field[4], field[5], '\0'};
-                    h = strtol(hArr, NULL, 10);
-                    i = strtol(iArr, NULL, 10);
-                    s = strtol(sArr, NULL, 10);
+                    h = (int)strtol(hArr, NULL, 10);
+                    i = (int)strtol(iArr, NULL, 10);
+                    s = (int)strtol(sArr, NULL, 10);
                     field += 6;
 
                     // Extra: fractional time. Saved as microseconds.
