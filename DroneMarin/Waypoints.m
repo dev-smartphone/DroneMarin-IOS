@@ -18,19 +18,11 @@
 }
 
 - (void) setFirstDest:(CLLocationCoordinate2D)maDest {
-    dest[0] = maDest;
+    dest = maDest;
 }
 
 - (CLLocationCoordinate2D) getFirstDest {
-    return dest[0];
-}
-
-- (void) setSecondDest:(CLLocationCoordinate2D)maDest {
-    dest[1] = maDest;
-}
-
-- (CLLocationCoordinate2D) getSecondDest {
-    return dest[1];
+    return dest;
 }
 
 - (bool) getIsStationnaire {

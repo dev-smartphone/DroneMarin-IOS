@@ -13,14 +13,12 @@
     bool isStationnaire;
     bool isPriseImage;
     float vitesse;
-    CLLocationCoordinate2D dest[2];
+    CLLocationCoordinate2D dest;
 }
 
 - (id) init;
 - (void) setFirstDest: (CLLocationCoordinate2D) dest;
 - (CLLocationCoordinate2D) getFirstDest;
-- (void) setSecondDest: (CLLocationCoordinate2D) dest;
-- (CLLocationCoordinate2D) getSecondDest;
 - (bool) getIsStationnaire;
 - (bool) getIsPrimeImage;
 - (void) setIsStationnaire: (bool)stationnaire;
