@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		056DBEC82064EA7C00213377 /* checkbox_checked.png in Resources */ = {isa = PBXBuildFile; fileRef = 056DBEC72064EA7C00213377 /* checkbox_checked.png */; };
+		056DBECA2064F05E00213377 /* checkbox_unchecked.png in Resources */ = {isa = PBXBuildFile; fileRef = 056DBEC92064F05E00213377 /* checkbox_unchecked.png */; };
+		056DBECD2068C94D00213377 /* Waypoints.m in Sources */ = {isa = PBXBuildFile; fileRef = 056DBECC2068C94D00213377 /* Waypoints.m */; };
+		05B85B69205696F60011B7AE /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05B85B68205696F60011B7AE /* MapKit.framework */; };
 		F250EB2F20526E0F00DC26B1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F250EB2E20526E0F00DC26B1 /* main.m */; };
 		F250EB3220526E0F00DC26B1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F250EB3120526E0F00DC26B1 /* AppDelegate.m */; };
 		F250EB3520526E0F00DC26B1 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F250EB3420526E0F00DC26B1 /* ViewController.m */; };
@@ -35,6 +39,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		056DBEC72064EA7C00213377 /* checkbox_checked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = checkbox_checked.png; path = ../../checkbox_checked.png; sourceTree = "<group>"; };
+		056DBEC92064F05E00213377 /* checkbox_unchecked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = checkbox_unchecked.png; path = ../../checkbox_unchecked.png; sourceTree = "<group>"; };
+		056DBECB2068C77F00213377 /* Waypoints.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Waypoints.h; sourceTree = "<group>"; };
+		056DBECC2068C94D00213377 /* Waypoints.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Waypoints.m; sourceTree = "<group>"; };
+		05B85B68205696F60011B7AE /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		F250EB2A20526E0F00DC26B1 /* DroneMarin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DroneMarin.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F250EB2E20526E0F00DC26B1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		F250EB3020526E0F00DC26B1 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -58,6 +67,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				05B85B69205696F60011B7AE /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +88,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		05B85B67205696F60011B7AE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				05B85B68205696F60011B7AE /* MapKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		F250EB2120526E0F00DC26B1 = {
 			isa = PBXGroup;
 			children = (
@@ -85,6 +103,7 @@
 				F250EB4620526E0F00DC26B1 /* DroneMarinTests */,
 				F250EB5120526E0F00DC26B1 /* DroneMarinUITests */,
 				F250EB2B20526E0F00DC26B1 /* Products */,
+				05B85B67205696F60011B7AE /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -101,6 +120,8 @@
 		F250EB2C20526E0F00DC26B1 /* DroneMarin */ = {
 			isa = PBXGroup;
 			children = (
+				056DBEC92064F05E00213377 /* checkbox_unchecked.png */,
+				056DBEC72064EA7C00213377 /* checkbox_checked.png */,
 				F250EB3020526E0F00DC26B1 /* AppDelegate.h */,
 				F250EB3120526E0F00DC26B1 /* AppDelegate.m */,
 				F250EB3320526E0F00DC26B1 /* ViewController.h */,
@@ -110,6 +131,8 @@
 				F250EB3B20526E0F00DC26B1 /* LaunchScreen.storyboard */,
 				F250EB3E20526E0F00DC26B1 /* Info.plist */,
 				F250EB2D20526E0F00DC26B1 /* Supporting Files */,
+				056DBECB2068C77F00213377 /* Waypoints.h */,
+				056DBECC2068C94D00213377 /* Waypoints.m */,
 			);
 			path = DroneMarin;
 			sourceTree = "<group>";
@@ -246,8 +269,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				056DBEC82064EA7C00213377 /* checkbox_checked.png in Resources */,
 				F250EB3D20526E0F00DC26B1 /* LaunchScreen.storyboard in Resources */,
 				F250EB3A20526E0F00DC26B1 /* Assets.xcassets in Resources */,
+				056DBECA2064F05E00213377 /* checkbox_unchecked.png in Resources */,
 				F250EB3820526E0F00DC26B1 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -273,6 +298,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				056DBECD2068C94D00213377 /* Waypoints.m in Sources */,
 				F250EB3520526E0F00DC26B1 /* ViewController.m in Sources */,
 				F250EB3220526E0F00DC26B1 /* AppDelegate.m in Sources */,
 				F250EB2F20526E0F00DC26B1 /* main.m in Sources */,
@@ -509,6 +535,7 @@
 				F250EB5920526E0F00DC26B1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		F250EB5A20526E0F00DC26B1 /* Build configuration list for PBXNativeTarget "DroneMarinTests" */ = {
 			isa = XCConfigurationList;
@@ -517,6 +544,7 @@
 				F250EB5C20526E0F00DC26B1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		F250EB5D20526E0F00DC26B1 /* Build configuration list for PBXNativeTarget "DroneMarinUITests" */ = {
 			isa = XCConfigurationList;
@@ -525,6 +553,7 @@
 				F250EB5F20526E0F00DC26B1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
