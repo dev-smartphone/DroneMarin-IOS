@@ -28,8 +28,6 @@ NSMutableArray  *monTabWaypoints;
     CLLocationCoordinate2D userLocation = CLLocationCoordinate2DMake(46.134739, -1.150361);
     CLLocationDistance distance = 50*50;
     [mapView setRegion:MKCoordinateRegionMakeWithDistance(userLocation, distance, distance)];
-    firstDraw = true;
-    secondDraw = true;
     priseImage = false;
     stationnaire = false;
     //Add onTap
@@ -44,14 +42,17 @@ NSMutableArray  *monTabWaypoints;
     CGPoint touchPoint = [tgr locationInView:mapView];
     CLLocationCoordinate2D touchMapCoordinate = [mapView convertPoint:touchPoint toCoordinateFromView:mapView];
     
+    //dialogbox
     UIAlertController *ui = [UIAlertController alertControllerWithTitle:@"Propriété du waypoint" message:nil preferredStyle:UIAlertControllerStyleAlert];
     
+    //textfield vitesse
     [ui addTextFieldWithConfigurationHandler:^(UITextField *textField) {
         textField.placeholder = @"Vitesse";
         textField.clearButtonMode = UITextFieldViewModeWhileEditing;
     }];
     
     __weak typeof (self) weakSelf = self;
+    //checkbox prise d'image
     [ui addTextFieldWithConfigurationHandler:^(UITextField *textField) {
         UIButton *checkbox = [UIButton buttonWithType:UIButtonTypeCustom];
         [checkbox setFrame:CGRectMake(2, 2, 18, 18)];
@@ -72,6 +73,7 @@ NSMutableArray  *monTabWaypoints;
         [textField setText:@"Prise d'image"];
     }];
     
+    //checkbox point stationnaire
     [ui addTextFieldWithConfigurationHandler:^(UITextField *textField) {
         UIButton *checkbox = [UIButton buttonWithType:UIButtonTypeCustom];
         [checkbox setFrame:CGRectMake(2, 2, 18, 18)];
@@ -107,6 +109,8 @@ NSMutableArray  *monTabWaypoints;
         NSArray *textFields = ui.textFields;
         UITextField *vitesseTextField = textFields[0];
         NSString *vitesseString = vitesseTextField.text;
+        
+        //Init waypoint
         [monWaypoint setVitesse:[vitesseString floatValue]];
         [monWaypoint setIsPrimeImage:priseImage];
         [monWaypoint setIsStationnaire:stationnaire];
@@ -124,6 +128,7 @@ NSMutableArray  *monTabWaypoints;
     [self presentViewController:ui animated:YES completion:nil];
 }
 
+//On click on checkbock is prise image
 -(void)buttonPressedPriseImage:(UIButton*)sender{
     if (sender.selected) {
         priseImage = false;
@@ -134,6 +139,7 @@ NSMutableArray  *monTabWaypoints;
     }
 }
 
+//On click on checkbox is stationnaire
 -(void)buttonPressedStationnaire:(UIButton*)sender{
     if (sender.selected) {
         stationnaire = false;

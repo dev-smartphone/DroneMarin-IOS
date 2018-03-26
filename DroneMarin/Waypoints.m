@@ -29,7 +29,7 @@
     return isStationnaire;
 }
 
-- (bool) getIsPriseImage {
+- (bool) getIsPrimeImage {
     return isPriseImage;
 }
 
