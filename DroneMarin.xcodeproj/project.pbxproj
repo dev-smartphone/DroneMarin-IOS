@@ -15,6 +15,7 @@
 		F250EB3D20526E0F00DC26B1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F250EB3B20526E0F00DC26B1 /* LaunchScreen.storyboard */; };
 		F250EB4820526E0F00DC26B1 /* DroneMarinTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F250EB4720526E0F00DC26B1 /* DroneMarinTests.m */; };
 		F250EB5320526E0F00DC26B1 /* DroneMarinUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = F250EB5220526E0F00DC26B1 /* DroneMarinUITests.m */; };
+		F2630F912068CC4C0063DA99 /* NmeaParseLib in Resources */ = {isa = PBXBuildFile; fileRef = F2630F902068CC4C0063DA99 /* NmeaParseLib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,7 @@
 		F250EB4E20526E0F00DC26B1 /* DroneMarinUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DroneMarinUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F250EB5220526E0F00DC26B1 /* DroneMarinUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DroneMarinUITests.m; sourceTree = "<group>"; };
 		F250EB5420526E0F00DC26B1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F2630F902068CC4C0063DA99 /* NmeaParseLib */ = {isa = PBXFileReference; lastKnownFileType = folder; path = NmeaParseLib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +103,7 @@
 		F250EB2C20526E0F00DC26B1 /* DroneMarin */ = {
 			isa = PBXGroup;
 			children = (
+				F2630F902068CC4C0063DA99 /* NmeaParseLib */,
 				F250EB3020526E0F00DC26B1 /* AppDelegate.h */,
 				F250EB3120526E0F00DC26B1 /* AppDelegate.m */,
 				F250EB3320526E0F00DC26B1 /* ViewController.h */,
@@ -249,6 +252,7 @@
 				F250EB3D20526E0F00DC26B1 /* LaunchScreen.storyboard in Resources */,
 				F250EB3A20526E0F00DC26B1 /* Assets.xcassets in Resources */,
 				F250EB3820526E0F00DC26B1 /* Main.storyboard in Resources */,
+				F2630F912068CC4C0063DA99 /* NmeaParseLib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -509,6 +513,7 @@
 				F250EB5920526E0F00DC26B1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		F250EB5A20526E0F00DC26B1 /* Build configuration list for PBXNativeTarget "DroneMarinTests" */ = {
 			isa = XCConfigurationList;
@@ -517,6 +522,7 @@
 				F250EB5C20526E0F00DC26B1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		F250EB5D20526E0F00DC26B1 /* Build configuration list for PBXNativeTarget "DroneMarinUITests" */ = {
 			isa = XCConfigurationList;
@@ -525,6 +531,7 @@
 				F250EB5F20526E0F00DC26B1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
