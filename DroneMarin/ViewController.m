@@ -7,7 +7,7 @@
 //
 
 #import "ViewController.h"
-
+#import "Waypoints.h"
 @interface ViewController ()
 
 @end
@@ -15,20 +15,23 @@
 @implementation ViewController
 @synthesize mapView;
 CLLocationCoordinate2D dest[2];
-bool firstDraw, secondDraw;
+bool firstDraw, secondDraw, stationnaire, priseImage;
+NSMutableArray  *monTabWaypoints;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    monTabWaypoints = [NSMutableArray array];
     mapView.delegate =(id)self;
     
     //Set map on a specific position and zoom
+    
     CLLocationCoordinate2D userLocation = CLLocationCoordinate2DMake(46.134739, -1.150361);
     CLLocationDistance distance = 50*50;
     [mapView setRegion:MKCoordinateRegionMakeWithDistance(userLocation, distance, distance)];
     firstDraw = true;
     secondDraw = true;
-    
+    priseImage = false;
+    stationnaire = false;
     //Add onTap
      UITapGestureRecognizer *tgr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureHandler:)];
     [mapView addGestureRecognizer:tgr];
@@ -37,10 +40,9 @@ bool firstDraw, secondDraw;
 //Function on tap
 -(void)tapGestureHandler:(UITapGestureRecognizer *)tgr
 {
+    Waypoints *monWaypoint = [[Waypoints alloc]init];
     CGPoint touchPoint = [tgr locationInView:mapView];
     CLLocationCoordinate2D touchMapCoordinate = [mapView convertPoint:touchPoint toCoordinateFromView:mapView];
-    
-    
     
     UIAlertController *ui = [UIAlertController alertControllerWithTitle:@"Propriété du waypoint" message:nil preferredStyle:UIAlertControllerStyleAlert];
     
@@ -49,38 +51,12 @@ bool firstDraw, secondDraw;
         textField.clearButtonMode = UITextFieldViewModeWhileEditing;
     }];
     
-    UIAlertAction *okButton = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
-        
-        //A l'appuie du boutton ok
-        MKPointAnnotation *point1 = [[MKPointAnnotation alloc]init];
-        point1.coordinate = touchMapCoordinate;
-        [mapView addAnnotation:point1];
-        if (firstDraw) {
-            dest[0] = touchMapCoordinate;
-            firstDraw = false;
-        } else if (secondDraw) {
-            dest[1] = touchMapCoordinate;
-            secondDraw = false;
-            [self draw];
-        } else {
-            dest[0] = dest[1];
-            dest[1] = touchMapCoordinate;
-            [self draw];
-        }
-        
-        //Récupération de la vitesse
-        NSArray *textFields = ui.textFields;
-        UITextField *vitesseTextField = textFields[0];
-        NSString *vitesse = vitesseTextField.text;
-        
-    }];
-    
     __weak typeof (self) weakSelf = self;
     [ui addTextFieldWithConfigurationHandler:^(UITextField *textField) {
         UIButton *checkbox = [UIButton buttonWithType:UIButtonTypeCustom];
         [checkbox setFrame:CGRectMake(2, 2, 18, 18)];
         [checkbox setTag:1];
-        [checkbox addTarget:weakSelf action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        [checkbox addTarget:weakSelf action:@selector(buttonPressedPriseImage:) forControlEvents:UIControlEventTouchUpInside];
         
         [checkbox.imageView setContentMode:UIViewContentModeScaleAspectFit];
         [checkbox setImage:[UIImage imageNamed:@"checkbox_checked.png"] forState:UIControlStateSelected];
@@ -100,7 +76,7 @@ bool firstDraw, secondDraw;
         UIButton *checkbox = [UIButton buttonWithType:UIButtonTypeCustom];
         [checkbox setFrame:CGRectMake(2, 2, 18, 18)];
         [checkbox setTag:1];
-        [checkbox addTarget:weakSelf action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        [checkbox addTarget:weakSelf action:@selector(buttonPressedStationnaire:) forControlEvents:UIControlEventTouchUpInside];
         
         [checkbox.imageView setContentMode:UIViewContentModeScaleAspectFit];
         [checkbox setImage:[UIImage imageNamed:@"checkbox_checked.png"] forState:UIControlStateSelected];
@@ -120,16 +96,50 @@ bool firstDraw, secondDraw;
         
     }];
     
+    UIAlertAction *okButton = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+        
+        //A l'appuie du boutton ok
+        MKPointAnnotation *point1 = [[MKPointAnnotation alloc]init];
+        point1.coordinate = touchMapCoordinate;
+        [mapView addAnnotation:point1];
+        
+        //Récupération de la vitesse
+        NSArray *textFields = ui.textFields;
+        UITextField *vitesseTextField = textFields[0];
+        NSString *vitesseString = vitesseTextField.text;
+        [monWaypoint setVitesse:[vitesseString floatValue]];
+        [monWaypoint setIsPrimeImage:priseImage];
+        [monWaypoint setIsStationnaire:stationnaire];
+        [monWaypoint setDest:touchMapCoordinate];
+        [monTabWaypoints addObject:monWaypoint];
+        
+        if (monTabWaypoints.count > 1) {
+            [self draw];
+        }
+    }];
+    
     [ui addAction:annulerButton];
     [ui addAction:okButton];
     
     [self presentViewController:ui animated:YES completion:nil];
 }
 
--(void)buttonPressed:(UIButton*)sender{
+-(void)buttonPressedPriseImage:(UIButton*)sender{
     if (sender.selected) {
+        priseImage = false;
         [sender setSelected:FALSE];
     } else {
+        priseImage = true;
+        [sender setSelected:TRUE];
+    }
+}
+
+-(void)buttonPressedStationnaire:(UIButton*)sender{
+    if (sender.selected) {
+        stationnaire = false;
+        [sender setSelected:FALSE];
+    } else {
+        stationnaire = true;
         [sender setSelected:TRUE];
     }
 }
@@ -141,6 +151,14 @@ bool firstDraw, secondDraw;
 
 //Function to draw the line between waypoints
 -(void)draw {
+    int count = (int)[monTabWaypoints count]-1;
+    
+    Waypoints *firstDest = [monTabWaypoints objectAtIndex:(count-1)];
+    
+    Waypoints *secondDest = [monTabWaypoints objectAtIndex:count];
+    dest[0] = firstDest.getDest;
+    dest[1] = secondDest.getDest;
+    
     MKPolyline *polyline = [MKPolyline polylineWithCoordinates:dest count:2];
     [self.mapView addOverlay:polyline];
 }
