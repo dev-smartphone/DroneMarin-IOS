@@ -17,11 +17,11 @@
     return self;
 }
 
-- (void) setFirstDest:(CLLocationCoordinate2D)maDest {
+- (void) setDest:(CLLocationCoordinate2D)maDest {
     dest = maDest;
 }
 
-- (CLLocationCoordinate2D) getFirstDest {
+- (CLLocationCoordinate2D) getDest {
     return dest;
 }
 

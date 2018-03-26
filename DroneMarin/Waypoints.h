@@ -17,8 +17,8 @@
 }
 
 - (id) init;
-- (void) setFirstDest: (CLLocationCoordinate2D) dest;
-- (CLLocationCoordinate2D) getFirstDest;
+- (void) setDest: (CLLocationCoordinate2D) dest;
+- (CLLocationCoordinate2D) getDest;
 - (bool) getIsStationnaire;
 - (bool) getIsPrimeImage;
 - (void) setIsStationnaire: (bool)stationnaire;
