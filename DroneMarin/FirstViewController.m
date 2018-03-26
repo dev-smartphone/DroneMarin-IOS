@@ -38,6 +38,10 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void) viewDidDisappear:(BOOL)animated {
+    active = 0;
+}
+
 - (MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id)overlay
 {
     if ([overlay isKindOfClass:[MKPolyline class]]) {

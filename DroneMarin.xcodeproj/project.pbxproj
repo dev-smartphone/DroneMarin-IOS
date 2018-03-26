@@ -19,6 +19,7 @@
 		F2630FA22068DE480063DA99 /* minmea.c in Sources */ = {isa = PBXBuildFile; fileRef = F2630F9E2068DE480063DA99 /* minmea.c */; };
 		F2630FA32068DE480063DA99 /* parser.c in Sources */ = {isa = PBXBuildFile; fileRef = F2630FA02068DE480063DA99 /* parser.c */; };
 		F2630FA72068E1FB0063DA99 /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F2630FA62068E1FB0063DA99 /* FirstViewController.m */; };
+		F2630FAB2068E95F0063DA99 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2630FAA2068E95F0063DA99 /* MapKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +65,7 @@
 		F2630FA12068DE480063DA99 /* parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = parser.h; path = NmeaParseLib/parser.h; sourceTree = "<group>"; };
 		F2630FA62068E1FB0063DA99 /* FirstViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
 		F2630FA82068E2120063DA99 /* FirstViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FirstViewController.h; sourceTree = "<group>"; };
+		F2630FAA2068E95F0063DA99 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +73,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F2630FAB2068E95F0063DA99 /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -98,6 +101,7 @@
 				F250EB4620526E0F00DC26B1 /* DroneMarinTests */,
 				F250EB5120526E0F00DC26B1 /* DroneMarinUITests */,
 				F250EB2B20526E0F00DC26B1 /* Products */,
+				F2630FA92068E95F0063DA99 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -168,6 +172,14 @@
 				F2630FA12068DE480063DA99 /* parser.h */,
 			);
 			name = NmeaParseLib;
+			sourceTree = "<group>";
+		};
+		F2630FA92068E95F0063DA99 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F2630FAA2068E95F0063DA99 /* MapKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -509,6 +521,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "ulr.dev-smartphone.DroneMarinUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TEST_TARGET_NAME = DroneMarin;
 			};
 			name = Debug;
@@ -520,6 +533,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "ulr.dev-smartphone.DroneMarinUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TEST_TARGET_NAME = DroneMarin;
 			};
 			name = Release;
