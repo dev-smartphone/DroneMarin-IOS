@@ -7,6 +7,7 @@
 //
 
 #import "FirstViewController.h"
+#import "parser.h"
 @interface FirstViewController ()
 
 @end
@@ -23,6 +24,12 @@
     CLLocationCoordinate2D userLocation = CLLocationCoordinate2DMake(46.134739, -1.150361);
     CLLocationDistance distance = 50*50;
     [mapView setRegion:MKCoordinateRegionMakeWithDistance(userLocation, distance, distance)];
+    
+    [self performSelectorInBackground:@selector(beginGetData) withObject:nil];
+}
+
+- (void) beginGetData {
+    app("127.0.0.1");
 }
 
 
