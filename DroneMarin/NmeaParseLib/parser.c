@@ -89,7 +89,9 @@ void app(const char *address)
     
     fd_set rdfs;
     
-    while (1)
+    active = 1;
+    
+    while (active)
     {
         FD_ZERO(&rdfs);
         

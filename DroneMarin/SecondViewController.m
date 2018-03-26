@@ -6,15 +6,13 @@
 //  Copyright © 2018 dev-smartphone. All rights reserved.
 //
 
-#import "ViewController.h"
+#import "SecondViewController.h"
 #import "Waypoints.h"
-#import "Modele.h"
-
-@interface ViewController ()
+@interface SecondViewController ()
 
 @end
 
-@implementation ViewController
+@implementation SecondViewController
 @synthesize mapView;
 CLLocationCoordinate2D dest[2];
 bool firstDraw, secondDraw, stationnaire, priseImage;
