@@ -8,6 +8,8 @@
 
 #import "ViewController.h"
 #import "Waypoints.h"
+#import "Modele.h"
+
 @interface ViewController ()
 
 @end
@@ -17,12 +19,13 @@
 CLLocationCoordinate2D dest[2];
 bool firstDraw, secondDraw, stationnaire, priseImage;
 NSMutableArray  *monTabWaypoints;
+Modele *modele;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     monTabWaypoints = [NSMutableArray array];
     mapView.delegate =(id)self;
-    
+    modele = [[Modele alloc]init];
     //Set map on a specific position and zoom
     
     CLLocationCoordinate2D userLocation = CLLocationCoordinate2DMake(46.134739, -1.150361);
@@ -115,9 +118,9 @@ NSMutableArray  *monTabWaypoints;
         [monWaypoint setIsPrimeImage:priseImage];
         [monWaypoint setIsStationnaire:stationnaire];
         [monWaypoint setDest:touchMapCoordinate];
-        [monTabWaypoints addObject:monWaypoint];
+        [modele addWaypoint:monWaypoint];
         
-        if (monTabWaypoints.count > 1) {
+        if ([modele getNbWaypoints] > 1) {
             [self draw];
         }
     }];
@@ -157,11 +160,11 @@ NSMutableArray  *monTabWaypoints;
 
 //Function to draw the line between waypoints
 -(void)draw {
-    int count = (int)[monTabWaypoints count]-1;
+    int count = (int)[modele getNbWaypoints]-1;
     
-    Waypoints *firstDest = [monTabWaypoints objectAtIndex:(count-1)];
+    Waypoints *firstDest = [modele getWaypointAtIndex:(count-1)];
     
-    Waypoints *secondDest = [monTabWaypoints objectAtIndex:count];
+    Waypoints *secondDest = [modele getWaypointAtIndex:count];
     dest[0] = firstDest.getDest;
     dest[1] = secondDest.getDest;
     

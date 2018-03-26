@@ -6,8 +6,18 @@
 //  Copyright © 2018 dev-smartphone. All rights reserved.
 //
 
-#ifndef Modele_h
-#define Modele_h
+#import <UIKit/UIKit.h>
+#import <MapKit/MapKit.h>
+#import "Waypoints.h"
 
+@interface Modele : NSObject
+{
+    NSMutableArray *monTabWaypoints;
+}
 
-#endif /* Modele_h */
+- (id) init;
+- (int) getNbWaypoints;
+- (void) addWaypoint: (Waypoints*)waypoint;
+- (Waypoints*) getWaypointAtIndex: (int)index;
+
+@end
