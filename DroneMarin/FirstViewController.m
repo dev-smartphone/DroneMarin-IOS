@@ -7,7 +7,7 @@
 //
 
 #import "FirstViewController.h"
-#import "parser.h"
+
 @interface FirstViewController ()
 
 @end
@@ -29,7 +29,7 @@
 }
 
 - (void) beginGetData {
-    app("127.0.0.1");
+    //app("127.0.0.1");
 }
 
 
@@ -39,7 +39,7 @@
 }
 
 - (void) viewDidDisappear:(BOOL)animated {
-    active = 0;
+   //active = 0;
 }
 
 - (MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id)overlay

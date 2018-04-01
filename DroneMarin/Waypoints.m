@@ -13,7 +13,7 @@
 - (id) init {
     isStationnaire = false;
     isPriseImage = false;
-    vitesse = 10.0f;
+    vitesse = 0.0f;
     return self;
 }
 
@@ -49,4 +49,10 @@
     vitesse = speed;
 }
 
+- (MKPointAnnotation *) getAnnot {
+    return annot;
+}
+- (void) setAnnot: (MKPointAnnotation *)annotation {
+    annot = annotation;
+}
 @end

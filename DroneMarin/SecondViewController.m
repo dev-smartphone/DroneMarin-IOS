@@ -8,6 +8,7 @@
 
 #import "SecondViewController.h"
 #import "Waypoints.h"
+#import "Modele.h"
 @interface SecondViewController ()
 
 @end
@@ -16,12 +17,12 @@
 @synthesize mapView;
 CLLocationCoordinate2D dest[2];
 bool firstDraw, secondDraw, stationnaire, priseImage;
-NSMutableArray  *monTabWaypoints;
+NSMutableArray  *monTab;
 Modele *modele;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    monTabWaypoints = [NSMutableArray array];
+    monTab = [NSMutableArray array];
     mapView.delegate =(id)self;
     modele = [[Modele alloc]init];
     //Set map on a specific position and zoom
@@ -42,89 +43,192 @@ Modele *modele;
     Waypoints *monWaypoint = [[Waypoints alloc]init];
     CGPoint touchPoint = [tgr locationInView:mapView];
     CLLocationCoordinate2D touchMapCoordinate = [mapView convertPoint:touchPoint toCoordinateFromView:mapView];
-    
+    NSMutableArray *array = modele.getArray;
+    bool delete = false;
+    Waypoints *leWaypoint;
+    int index = 0;
+    for (Waypoints* waypoint in array) {
+        CLLocationCoordinate2D coord = waypoint.getDest;
+        float lat = touchMapCoordinate.latitude - coord.latitude;
+        float lon = touchMapCoordinate.longitude - coord.longitude;
+        if ((lat < 0.0001 && lat > -0.0001)) {
+            delete = true;
+            leWaypoint = waypoint;
+            break;
+        }
+        index++;
+    }
     //dialogbox
     UIAlertController *ui = [UIAlertController alertControllerWithTitle:@"Propriété du waypoint" message:nil preferredStyle:UIAlertControllerStyleAlert];
     
-    //textfield vitesse
-    [ui addTextFieldWithConfigurationHandler:^(UITextField *textField) {
-        textField.placeholder = @"Vitesse";
-        textField.clearButtonMode = UITextFieldViewModeWhileEditing;
-    }];
-    
-    __weak typeof (self) weakSelf = self;
-    //checkbox prise d'image
-    [ui addTextFieldWithConfigurationHandler:^(UITextField *textField) {
-        UIButton *checkbox = [UIButton buttonWithType:UIButtonTypeCustom];
-        [checkbox setFrame:CGRectMake(2, 2, 18, 18)];
-        [checkbox setTag:1];
-        [checkbox addTarget:weakSelf action:@selector(buttonPressedPriseImage:) forControlEvents:UIControlEventTouchUpInside];
+    if (delete) {
+        [ui addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+            textField.placeholder = @"Vitesse";
+            textField.text = [NSString stringWithFormat:@"%f", leWaypoint.getVitesse];
+            textField.clearButtonMode = UITextFieldViewModeWhileEditing;
+        }];
         
-        [checkbox.imageView setContentMode:UIViewContentModeScaleAspectFit];
-        [checkbox setImage:[UIImage imageNamed:@"checkbox_checked.png"] forState:UIControlStateSelected];
-        [checkbox setImage:[UIImage imageNamed:@"checkbox_checked.png"] forState:UIControlStateHighlighted];
-        [checkbox setImage:[UIImage imageNamed:@"checkbox_unchecked.png"] forState:UIControlStateNormal];
-        [checkbox setAdjustsImageWhenHighlighted:TRUE];
+        __weak typeof (self) weakSelf = self;
+        //checkbox prise d'image
+        [ui addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+            UIButton *checkbox = [UIButton buttonWithType:UIButtonTypeCustom];
+            [checkbox setFrame:CGRectMake(2, 2, 18, 18)];
+            [checkbox setTag:1];
+            [checkbox addTarget:weakSelf action:@selector(buttonPressedPriseImage:) forControlEvents:UIControlEventTouchUpInside];
+            
+            [checkbox.imageView setContentMode:UIViewContentModeScaleAspectFit];
+            if (leWaypoint.getIsPrimeImage) {
+                [checkbox setSelected:true];
+            } else {
+                [checkbox setSelected:false];
+            }
+            [checkbox.imageView setContentMode:UIViewContentModeScaleAspectFit];
+            [checkbox setImage:[UIImage imageNamed:@"checkbox_checked.png"] forState:UIControlStateSelected];
+            [checkbox setImage:[UIImage imageNamed:@"checkbox_checked.png"] forState:UIControlStateHighlighted];
+            [checkbox setImage:[UIImage imageNamed:@"checkbox_unchecked.png"] forState:UIControlStateNormal];
+            [checkbox setAdjustsImageWhenHighlighted:TRUE];
+            
+            [textField setClearButtonMode:UITextFieldViewModeAlways];
+            [textField setRightViewMode:UITextFieldViewModeAlways];
+            [textField setRightView:checkbox];
+            
+            [textField setTag:-1];
+            [textField setText:@"Prise d'image"];
+        }];
         
-        [textField setClearButtonMode:UITextFieldViewModeAlways];
-        [textField setRightViewMode:UITextFieldViewModeAlways];
-        [textField setRightView:checkbox];
+        //checkbox point stationnaire
+        [ui addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+            UIButton *checkbox = [UIButton buttonWithType:UIButtonTypeCustom];
+            [checkbox setFrame:CGRectMake(2, 2, 18, 18)];
+            [checkbox setTag:1];
+            [checkbox addTarget:weakSelf action:@selector(buttonPressedStationnaire:) forControlEvents:UIControlEventTouchUpInside];
+            if (leWaypoint.getIsStationnaire) {
+                [checkbox setSelected:true];
+            } else {
+                [checkbox setSelected:false];
+            }
+            [checkbox.imageView setContentMode:UIViewContentModeScaleAspectFit];
+            [checkbox setImage:[UIImage imageNamed:@"checkbox_checked.png"] forState:UIControlStateSelected];
+            [checkbox setImage:[UIImage imageNamed:@"checkbox_checked.png"] forState:UIControlStateHighlighted];
+            [checkbox setImage:[UIImage imageNamed:@"checkbox_unchecked.png"] forState:UIControlStateNormal];
+            [checkbox setAdjustsImageWhenHighlighted:TRUE];
+            
+            [textField setClearButtonMode:UITextFieldViewModeAlways];
+            [textField setRightViewMode:UITextFieldViewModeAlways];
+            [textField setRightView:checkbox];
+            
+            [textField setTag:-1];
+            [textField setText:@"Point stationnaire"];
+        }];
         
-        [textField setTag:-1];
-        [textField setText:@"Prise d'image"];
-    }];
-    
-    //checkbox point stationnaire
-    [ui addTextFieldWithConfigurationHandler:^(UITextField *textField) {
-        UIButton *checkbox = [UIButton buttonWithType:UIButtonTypeCustom];
-        [checkbox setFrame:CGRectMake(2, 2, 18, 18)];
-        [checkbox setTag:1];
-        [checkbox addTarget:weakSelf action:@selector(buttonPressedStationnaire:) forControlEvents:UIControlEventTouchUpInside];
+        UIAlertAction *deleteButton = [UIAlertAction actionWithTitle:@"Supprimer" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action){
+            [mapView removeAnnotation:leWaypoint.getAnnot];
+            [modele deleteWaypoint:leWaypoint];
+            [self reDraw];
+        }];
         
-        [checkbox.imageView setContentMode:UIViewContentModeScaleAspectFit];
-        [checkbox setImage:[UIImage imageNamed:@"checkbox_checked.png"] forState:UIControlStateSelected];
-        [checkbox setImage:[UIImage imageNamed:@"checkbox_checked.png"] forState:UIControlStateHighlighted];
-        [checkbox setImage:[UIImage imageNamed:@"checkbox_unchecked.png"] forState:UIControlStateNormal];
-        [checkbox setAdjustsImageWhenHighlighted:TRUE];
+        UIAlertAction *annulerButton = [UIAlertAction actionWithTitle:@"Annuler" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action){
+            
+        }];
         
-        [textField setClearButtonMode:UITextFieldViewModeAlways];
-        [textField setRightViewMode:UITextFieldViewModeAlways];
-        [textField setRightView:checkbox];
+        UIAlertAction *okButton = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+            
+            //A l'appuie du boutton ok
+            //Récupération de la vitesse
+            NSArray *textFields = ui.textFields;
+            UITextField *vitesseTextField = textFields[0];
+            NSString *vitesseString = vitesseTextField.text;
+            
+            //Init waypoint
+            [leWaypoint setVitesse:[vitesseString floatValue]];
+            [leWaypoint setIsPrimeImage:priseImage];
+            [leWaypoint setIsStationnaire:stationnaire];
+        }];
+        [ui addAction:okButton];
+        [ui addAction:deleteButton];
+        [ui addAction:annulerButton];
+    } else {
+        //textfield vitesse
+        [ui addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+            textField.placeholder = @"Vitesse";
+            textField.clearButtonMode = UITextFieldViewModeWhileEditing;
+        }];
         
-        [textField setTag:-1];
-        [textField setText:@"Point stationnaire"];
-    }];
-    
-    UIAlertAction *annulerButton = [UIAlertAction actionWithTitle:@"Annuler" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+        __weak typeof (self) weakSelf = self;
+        //checkbox prise d'image
+        [ui addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+            UIButton *checkbox = [UIButton buttonWithType:UIButtonTypeCustom];
+            [checkbox setFrame:CGRectMake(2, 2, 18, 18)];
+            [checkbox setTag:1];
+            [checkbox addTarget:weakSelf action:@selector(buttonPressedPriseImage:) forControlEvents:UIControlEventTouchUpInside];
+            
+            [checkbox.imageView setContentMode:UIViewContentModeScaleAspectFit];
+            [checkbox setImage:[UIImage imageNamed:@"checkbox_checked.png"] forState:UIControlStateSelected];
+            [checkbox setImage:[UIImage imageNamed:@"checkbox_checked.png"] forState:UIControlStateHighlighted];
+            [checkbox setImage:[UIImage imageNamed:@"checkbox_unchecked.png"] forState:UIControlStateNormal];
+            [checkbox setAdjustsImageWhenHighlighted:TRUE];
+            
+            [textField setClearButtonMode:UITextFieldViewModeAlways];
+            [textField setRightViewMode:UITextFieldViewModeAlways];
+            [textField setRightView:checkbox];
+            
+            [textField setTag:-1];
+            [textField setText:@"Prise d'image"];
+        }];
         
-    }];
-    
-    UIAlertAction *okButton = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+        //checkbox point stationnaire
+        [ui addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+            UIButton *checkbox = [UIButton buttonWithType:UIButtonTypeCustom];
+            [checkbox setFrame:CGRectMake(2, 2, 18, 18)];
+            [checkbox setTag:1];
+            [checkbox addTarget:weakSelf action:@selector(buttonPressedStationnaire:) forControlEvents:UIControlEventTouchUpInside];
+            
+            [checkbox.imageView setContentMode:UIViewContentModeScaleAspectFit];
+            [checkbox setImage:[UIImage imageNamed:@"checkbox_checked.png"] forState:UIControlStateSelected];
+            [checkbox setImage:[UIImage imageNamed:@"checkbox_checked.png"] forState:UIControlStateHighlighted];
+            [checkbox setImage:[UIImage imageNamed:@"checkbox_unchecked.png"] forState:UIControlStateNormal];
+            [checkbox setAdjustsImageWhenHighlighted:TRUE];
+            
+            [textField setClearButtonMode:UITextFieldViewModeAlways];
+            [textField setRightViewMode:UITextFieldViewModeAlways];
+            [textField setRightView:checkbox];
+            
+            [textField setTag:-1];
+            [textField setText:@"Point stationnaire"];
+        }];
         
-        //A l'appuie du boutton ok
-        MKPointAnnotation *point1 = [[MKPointAnnotation alloc]init];
-        point1.coordinate = touchMapCoordinate;
-        [mapView addAnnotation:point1];
+        UIAlertAction *annulerButton = [UIAlertAction actionWithTitle:@"Annuler" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+            
+        }];
         
-        //Récupération de la vitesse
-        NSArray *textFields = ui.textFields;
-        UITextField *vitesseTextField = textFields[0];
-        NSString *vitesseString = vitesseTextField.text;
+        UIAlertAction *okButton = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+            
+            //A l'appuie du boutton ok
+            MKPointAnnotation *point1 = [[MKPointAnnotation alloc]init];
+            point1.coordinate = touchMapCoordinate;
+            [mapView addAnnotation:point1];
+            
+            //Récupération de la vitesse
+            NSArray *textFields = ui.textFields;
+            UITextField *vitesseTextField = textFields[0];
+            NSString *vitesseString = vitesseTextField.text;
+            
+            //Init waypoint
+            [monWaypoint setVitesse:[vitesseString floatValue]];
+            [monWaypoint setIsPrimeImage:priseImage];
+            [monWaypoint setIsStationnaire:stationnaire];
+            [monWaypoint setDest:touchMapCoordinate];
+            [monWaypoint setAnnot:point1];
+            [modele addWaypoint:monWaypoint];
+            
+            if ([modele getNbWaypoints] > 1) {
+                [self draw];
+            }
+        }];
         
-        //Init waypoint
-        [monWaypoint setVitesse:[vitesseString floatValue]];
-        [monWaypoint setIsPrimeImage:priseImage];
-        [monWaypoint setIsStationnaire:stationnaire];
-        [monWaypoint setDest:touchMapCoordinate];
-        [modele addWaypoint:monWaypoint];
-        
-        if ([modele getNbWaypoints] > 1) {
-            [self draw];
-        }
-    }];
-    
-    [ui addAction:annulerButton];
-    [ui addAction:okButton];
+        [ui addAction:annulerButton];
+        [ui addAction:okButton];
+    }
     
     [self presentViewController:ui animated:YES completion:nil];
 }
@@ -137,6 +241,13 @@ Modele *modele;
     } else {
         priseImage = true;
         [sender setSelected:TRUE];
+    }
+}
+
+-(void)reDraw {
+    NSMutableArray *array = modele.getArray;
+    for (MKPolyline * polyline in array) {
+        [mapView removeOverlay:polyline];
     }
 }
 
@@ -167,6 +278,7 @@ Modele *modele;
     dest[1] = secondDest.getDest;
     
     MKPolyline *polyline = [MKPolyline polylineWithCoordinates:dest count:2];
+    [modele addPoyline:polyline];
     [self.mapView addOverlay:polyline];
 }
 

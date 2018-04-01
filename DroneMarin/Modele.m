@@ -28,5 +28,20 @@
     [monTabWaypoints addObject:waypoint];
 }
 
+- (void)addPoyline:(MKPolyline *)polyline {
+    [monTabWaypoints addObject:polyline];
+}
+
+-(NSMutableArray*)getArray {
+    return monTabWaypoints;
+}
+
+-(NSMutableArray*)getPolylineArray {
+    return monTabPolyline;
+}
+
+-(void)deleteWaypoint:(Waypoints *)waypoint {
+    [monTabWaypoints removeObject:waypoint];
+}
 
 @end

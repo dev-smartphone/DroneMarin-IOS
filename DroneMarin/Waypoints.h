@@ -14,6 +14,7 @@
     bool isPriseImage;
     float vitesse;
     CLLocationCoordinate2D dest;
+    MKPointAnnotation *annot;
 }
 
 - (id) init;
@@ -25,5 +26,7 @@
 - (void) setIsPrimeImage: (bool)priseImage;
 - (float) getVitesse;
 - (void) setVitesse: (float)speed;
+- (MKPointAnnotation *) getAnnot;
+- (void) setAnnot: (MKPointAnnotation *)annotation;
 
 @end

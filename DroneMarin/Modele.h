@@ -13,11 +13,15 @@
 @interface Modele : NSObject
 {
     NSMutableArray *monTabWaypoints;
+    NSMutableArray *monTabPolyline;
 }
 
 - (id) init;
 - (int) getNbWaypoints;
 - (void) addWaypoint: (Waypoints*)waypoint;
 - (Waypoints*) getWaypointAtIndex: (int)index;
-
+- (NSMutableArray*)getArray;
+- (void)deleteWaypoint:(Waypoints *)waypoint;
+- (void)addPoyline:(MKPolyline *)polyline;
+- (NSMutableArray*)getPolylineArray;
 @end
