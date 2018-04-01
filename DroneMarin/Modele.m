@@ -29,7 +29,7 @@
 }
 
 - (void)addPoyline:(MKPolyline *)polyline {
-    [monTabWaypoints addObject:polyline];
+    [monTabPolyline addObject:polyline];
 }
 
 -(NSMutableArray*)getArray {

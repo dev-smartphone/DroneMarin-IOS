@@ -124,7 +124,7 @@ Modele *modele;
         UIAlertAction *deleteButton = [UIAlertAction actionWithTitle:@"Supprimer" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action){
             [mapView removeAnnotation:leWaypoint.getAnnot];
             [modele deleteWaypoint:leWaypoint];
-            [self reDraw];
+            //[self reDraw];
         }];
         
         UIAlertAction *annulerButton = [UIAlertAction actionWithTitle:@"Annuler" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action){
@@ -148,6 +148,7 @@ Modele *modele;
         [ui addAction:deleteButton];
         [ui addAction:annulerButton];
     } else {
+        NSLog(@"ça passe");
         //textfield vitesse
         [ui addTextFieldWithConfigurationHandler:^(UITextField *textField) {
             textField.placeholder = @"Vitesse";
@@ -245,9 +246,23 @@ Modele *modele;
 }
 
 -(void)reDraw {
-    NSMutableArray *array = modele.getArray;
+    NSMutableArray *array = modele.getPolylineArray;
     for (MKPolyline * polyline in array) {
         [mapView removeOverlay:polyline];
+    }
+    NSMutableArray *arrayWaypoints = modele.getArray;
+    int index = 0;
+    for (Waypoints * waypoint in arrayWaypoints) {
+        if (index < arrayWaypoints.count-1) {
+            
+            Waypoints *secondDest = [modele getWaypointAtIndex:index+1];
+            dest[0] = waypoint.getDest;
+            dest[1] = secondDest.getDest;
+            
+            MKPolyline *polyline = [MKPolyline polylineWithCoordinates:dest count:2];
+            [modele addPoyline:polyline];
+            [self.mapView addOverlay:polyline];
+        }
     }
 }
 
