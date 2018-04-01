@@ -13,6 +13,7 @@
 
 - (id) init {
     monTabWaypoints = [NSMutableArray array];
+    monTabPolyline = [NSMutableArray array];
     return self;
 }
 

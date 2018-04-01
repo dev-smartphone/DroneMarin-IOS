@@ -50,7 +50,6 @@ Modele *modele;
     for (Waypoints* waypoint in array) {
         CLLocationCoordinate2D coord = waypoint.getDest;
         float lat = touchMapCoordinate.latitude - coord.latitude;
-        float lon = touchMapCoordinate.longitude - coord.longitude;
         if ((lat < 0.0001 && lat > -0.0001)) {
             delete = true;
             leWaypoint = waypoint;
@@ -124,7 +123,7 @@ Modele *modele;
         UIAlertAction *deleteButton = [UIAlertAction actionWithTitle:@"Supprimer" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action){
             [mapView removeAnnotation:leWaypoint.getAnnot];
             [modele deleteWaypoint:leWaypoint];
-            //[self reDraw];
+            [self reDraw];
         }];
         
         UIAlertAction *annulerButton = [UIAlertAction actionWithTitle:@"Annuler" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action){
@@ -249,7 +248,10 @@ Modele *modele;
     NSMutableArray *array = modele.getPolylineArray;
     for (MKPolyline * polyline in array) {
         [mapView removeOverlay:polyline];
+        
     }
+    [array removeAllObjects];
+    
     NSMutableArray *arrayWaypoints = modele.getArray;
     int index = 0;
     for (Waypoints * waypoint in arrayWaypoints) {
