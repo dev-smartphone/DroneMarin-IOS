@@ -14,7 +14,7 @@
 @end
 
 @implementation SecondViewController
-@synthesize mapView;
+@synthesize mapView, valideWaypoints;
 CLLocationCoordinate2D dest[2];
 bool firstDraw, secondDraw, stationnaire, priseImage;
 NSMutableArray  *monTab;
@@ -33,8 +33,9 @@ Modele *modele;
     priseImage = false;
     stationnaire = false;
     //Add onTap
-     UITapGestureRecognizer *tgr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureHandler:)];
+    UITapGestureRecognizer *tgr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureHandler:)];
     [mapView addGestureRecognizer:tgr];
+    //[self parseDataToJSONFile];
 }
 
 //Function on tap
@@ -308,6 +309,60 @@ Modele *modele;
         return renderer;
     }
     return nil;
+}
+
+-(void) parseDataToJSONFile
+{
+    NSMutableDictionary *tmp2;
+    for (int i = 0; i < modele.getNbWaypoints ; i++)
+    {
+        Waypoints *w = [modele getWaypointAtIndex:i];
+        NSString *vitesse = [NSString stringWithFormat:@"%f", w.getVitesse];
+        NSString *isPriseImage;
+        if (w.getIsPrimeImage)
+            isPriseImage = @"Oui";
+        else
+            isPriseImage = @"Non";
+        NSString *Latitude = [NSString stringWithFormat:@"%f", w.getDest.latitude];
+        NSString *Longitude = [NSString stringWithFormat:@"%f", w.getDest.longitude];
+        NSDictionary *tmp = [[NSDictionary alloc] initWithObjectsAndKeys:
+                             vitesse, @"Vitesse",
+                             isPriseImage, @"PriseImage",
+                             Latitude, @"Latitude",
+                             Longitude, @"Longitude",
+                             nil];
+        NSString *key = [NSString stringWithFormat:@"Waypoint %d", i];
+        if (i == 0)
+        {
+            tmp2 = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
+                    tmp, key,
+                    nil];
+        }
+        else
+        {
+            [tmp2 setValue:tmp forKey:key];
+        }
+        
+    }
+    
+    NSError *err;
+    NSData *data = [NSJSONSerialization dataWithJSONObject:tmp2 options:0 error:&err];
+    [data writeToFile:@"/tmp/Waypoints.json" atomically:YES];
+    
+    /*NSFileManager *mng = [NSFileManager defaultManager];
+     if ([mng fileExistsAtPath:@"/tmp/Waypoints.json"] == YES)
+     NSString *success = @"Success";//zoneText.text = @"Success";
+     else
+     NSString *success = @"Success"; //zoneText.text = @"Failure...";*/
+    
+}
+
+-(void) buttonClick:(id)sender
+{
+    if(modele.getNbWaypoints != 0)
+    {
+        [self parseDataToJSONFile];
+    }
 }
 
 @end
