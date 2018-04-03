@@ -148,7 +148,6 @@ Modele *modele;
         [ui addAction:deleteButton];
         [ui addAction:annulerButton];
     } else {
-        NSLog(@"ça passe");
         //textfield vitesse
         [ui addTextFieldWithConfigurationHandler:^(UITextField *textField) {
             textField.placeholder = @"Vitesse";
@@ -313,10 +312,12 @@ Modele *modele;
 
 -(void) parseDataToJSONFile
 {
-    NSMutableDictionary *tmp2;
-    for (int i = 0; i < modele.getNbWaypoints ; i++)
+    NSMutableDictionary *tmp2 = [NSMutableDictionary dictionary];
+    int count = modele.getNbWaypoints;
+    for (int i = 0; i < count; i++)
     {
-        Waypoints *w = [modele getWaypointAtIndex:i];
+        NSLog(@"%i", i);
+        Waypoints *w = [modele getWaypointAtIndex:(count-1)-i];
         NSString *vitesse = [NSString stringWithFormat:@"%f", w.getVitesse];
         NSString *isPriseImage;
         if (w.getIsPrimeImage)
