@@ -52,7 +52,17 @@
 - (MKPointAnnotation *) getAnnot {
     return annot;
 }
+
 - (void) setAnnot: (MKPointAnnotation *)annotation {
     annot = annotation;
 }
+
+- (void) setTrame: (NSString *)trame {
+    trameNmea = trame;
+}
+
+- (NSString *) getTrame {
+    return trameNmea;
+}
+
 @end

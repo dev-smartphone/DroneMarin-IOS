@@ -14,7 +14,7 @@
 @end
 
 @implementation SecondViewController
-@synthesize mapView, valideWaypoints;
+@synthesize mapView, valideWaypoints, exporterWaypoints;
 CLLocationCoordinate2D dest[2];
 bool firstDraw, secondDraw, stationnaire, priseImage;
 NSMutableArray  *monTab;
@@ -363,6 +363,27 @@ Modele *modele;
     if(modele.getNbWaypoints != 0)
     {
         [self parseDataToJSONFile];
+    }
+}
+
+-(void) exporterClick:(id)sender
+{
+    if(modele.getNbWaypoints != 0)
+    {
+        NSMutableArray *arrayWaypoints = modele.getArray;
+        NSDate *now = [NSDate date];
+        NSDateFormatter *outputFormatter = [[NSDateFormatter alloc]init];
+        [outputFormatter setDateFormat:@"HHmmss"];
+        NSString *date = [outputFormatter stringFromDate:now];
+        
+        for (Waypoints * waypoint in arrayWaypoints) {
+            NSString *latitude = [NSString stringWithFormat:@"%f", waypoint.getDest.latitude];
+            NSString *longitude = [NSString stringWithFormat:@"%f", waypoint.getDest.longitude];
+            NSString *vitesse = [NSString stringWithFormat:@"%f", waypoint.getVitesse];
+            NSString *maTrame = [NSString stringWithFormat:@"$GPRMC,%@,A,%@,N,%@,W,%@,,1911194,E*68", date, latitude, longitude, vitesse];
+            [waypoint setTrame:maTrame];
+            NSLog(@"%@", maTrame);
+        }
     }
 }
 

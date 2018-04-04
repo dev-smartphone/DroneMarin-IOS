@@ -15,6 +15,7 @@
     float vitesse;
     CLLocationCoordinate2D dest;
     MKPointAnnotation *annot;
+    NSString *trameNmea;
 }
 
 - (id) init;
@@ -28,5 +29,6 @@
 - (void) setVitesse: (float)speed;
 - (MKPointAnnotation *) getAnnot;
 - (void) setAnnot: (MKPointAnnotation *)annotation;
-
+- (void) setTrame: (NSString *)trame;
+- (NSString *) getTrame;
 @end

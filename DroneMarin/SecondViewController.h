@@ -12,11 +12,14 @@
 @interface SecondViewController : UIViewController{
     IBOutlet MKMapView *mapView;
     IBOutlet UIButton *valideWaypoints;
+    IBOutlet UIButton *exporterWaypoints;
 }
 
 @property MKMapView *mapView;
 @property UIButton *valideWaypoints;
+@property UIButton *exporterWaypoints;
 
 -(IBAction) buttonClick:(id)sender;
+-(IBAction) exporterClick:(id)sender;
 @end
 
