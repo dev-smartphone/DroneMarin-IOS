@@ -312,11 +312,10 @@ Modele *modele;
 
 -(void) parseDataToJSONFile
 {
-    NSMutableDictionary *tmp2 = [NSMutableDictionary dictionary];
+    NSMutableDictionary *tmp2 = [[NSMutableDictionary dictionary] init];
     int count = modele.getNbWaypoints;
     for (int i = 0; i < count; i++)
     {
-        NSLog(@"%i", i);
         Waypoints *w = [modele getWaypointAtIndex:(count-1)-i];
         NSString *vitesse = [NSString stringWithFormat:@"%f", w.getVitesse];
         NSString *isPriseImage;
@@ -339,21 +338,10 @@ Modele *modele;
                              Longitude, @"Longitude",
                              nil];
         NSString *key = [NSString stringWithFormat:@"Waypoint %d", i];
-        if (i == 0)
-        {
-            tmp2 = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
-                    tmp, key,
-                    nil];
-        }
-        else
-        {
-            [tmp2 setValue:tmp forKey:key];
-        }
-        
+        [tmp2 setValue:tmp forKey:key];
     }
-    
     NSError *err;
-    NSData *data = [NSJSONSerialization dataWithJSONObject:tmp2 options:0 error:&err];
+    NSData *data = [NSJSONSerialization dataWithJSONObject:tmp2 options:NSJSONWritingPrettyPrinted error:&err];
     [data writeToFile:@"/tmp/Waypoints.json" atomically:YES];
     
     /*NSFileManager *mng = [NSFileManager defaultManager];
@@ -377,21 +365,54 @@ Modele *modele;
     if(modele.getNbWaypoints != 0)
     {
         NSMutableArray *arrayWaypoints = modele.getArray;
-        NSDate *now = [NSDate date];
-        NSDateFormatter *outputFormatter = [[NSDateFormatter alloc]init];
-        [outputFormatter setDateFormat:@"HHmmss"];
-        NSString *date = [outputFormatter stringFromDate:now];
         NSMutableString *monTab = [NSMutableString new];
+        NSDate *now = [NSDate date];
+        NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+        [formatter setDateFormat:@"HHmmss"];
+        NSString *date = [formatter stringFromDate:now];
         for (Waypoints * waypoint in arrayWaypoints) {
-            NSString *latitude = [NSString stringWithFormat:@"%f", waypoint.getDest.latitude];
-            NSString *longitude = [NSString stringWithFormat:@"%f", waypoint.getDest.longitude];
-            NSString *vitesse = [NSString stringWithFormat:@"%f", waypoint.getVitesse];
-            NSString *maTrame = [NSString stringWithFormat:@"$GPRMC,%@,A,%@,N,%@,W,%@,,1911194,E*68\n", date, latitude, longitude, vitesse];
-            [waypoint setTrame:maTrame];
-            [monTab appendString:maTrame];
+            NSString *a =[self getPos:waypoint.getDest.latitude longitude:waypoint.getDest.longitude];
+            NSString *maTrame = [NSString stringWithFormat:@"$GPGLL,%@,%@,*", a, date];
+            NSString *sum = [self getSum:maTrame];
+            NSString *trameFinal = [NSString stringWithFormat:@"%@%@\n", maTrame, sum];
+            [waypoint setTrame:trameFinal];
+            [monTab appendString:trameFinal];
         }
         [monTab writeToFile:@"/tmp/Trames.nmea" atomically:YES encoding:NSUTF8StringEncoding error:nil];
     }
+}
+
+-(NSString *)getSum:(NSString *)trame {
+    int checksum = 0;
+    NSUInteger end = [trame rangeOfString:@"*"].location;
+    if (end == -1)
+        end = trame.length;
+    for (int i =1; i< end; i++) {
+        checksum = checksum ^ [trame characterAtIndex:i];
+    }
+    NSString *hex = [NSString stringWithFormat:@"%02x", checksum];
+    if (hex.length == 1)
+        return [NSString stringWithFormat:@"0%@", hex];
+    return [hex uppercaseString];
+}
+
+-(NSString *)getPos:(double)latitude longitude:(double)longitude {
+    int latSeconds = (int)(round(fabs(latitude*3600)));
+    int latDegrees = latSeconds/3600;
+    latSeconds = latSeconds%3600;
+    int latMinutes = latSeconds/60;
+    latSeconds%=60;
+    
+    int longSeconds = (int)round(fabs(longitude*3600));
+    int longDegrees = longSeconds / 3600;
+    longSeconds = longSeconds % 3600;
+    int longMinutes = longSeconds / 60;
+    longSeconds %= 60;
+    
+    char latDirection = (latitude >= 0) ? 'N' : 'S';
+    char longDirection = (longitude >= 0) ? 'E' : 'W';
+    
+    return [NSString stringWithFormat:@"%i%i%i,%c,%i%i%i,%c", latDegrees, latMinutes, latSeconds, latDirection, longDegrees, longMinutes, longSeconds, longDirection];
 }
 
 @end
