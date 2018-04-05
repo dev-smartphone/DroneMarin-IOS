@@ -381,17 +381,16 @@ Modele *modele;
         NSDateFormatter *outputFormatter = [[NSDateFormatter alloc]init];
         [outputFormatter setDateFormat:@"HHmmss"];
         NSString *date = [outputFormatter stringFromDate:now];
-        
+        NSMutableString *monTab = [NSMutableString new];
         for (Waypoints * waypoint in arrayWaypoints) {
             NSString *latitude = [NSString stringWithFormat:@"%f", waypoint.getDest.latitude];
             NSString *longitude = [NSString stringWithFormat:@"%f", waypoint.getDest.longitude];
             NSString *vitesse = [NSString stringWithFormat:@"%f", waypoint.getVitesse];
-            NSString *maTrame = [NSString stringWithFormat:@"$GPRMC,%@,A,%@,N,%@,W,%@,,1911194,E*68", date, latitude, longitude, vitesse];
+            NSString *maTrame = [NSString stringWithFormat:@"$GPRMC,%@,A,%@,N,%@,W,%@,,1911194,E*68\n", date, latitude, longitude, vitesse];
             [waypoint setTrame:maTrame];
-            NSData *data = [maTrame dataUsingEncoding:NSUTF8StringEncoding];
-            [data writeToFile:@"/tmp/Trames.nmea" atomically:YES];
-            NSLog(@"%@", maTrame);
+            [monTab appendString:maTrame];
         }
+        [monTab writeToFile:@"/tmp/Trames.nmea" atomically:YES encoding:NSUTF8StringEncoding error:nil];
     }
 }
 
