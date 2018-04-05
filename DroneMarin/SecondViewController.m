@@ -320,15 +320,21 @@ Modele *modele;
         Waypoints *w = [modele getWaypointAtIndex:(count-1)-i];
         NSString *vitesse = [NSString stringWithFormat:@"%f", w.getVitesse];
         NSString *isPriseImage;
+        NSString *isStationnaire;
         if (w.getIsPrimeImage)
             isPriseImage = @"Oui";
         else
             isPriseImage = @"Non";
+        if (w.getIsStationnaire)
+            isStationnaire = @"Oui";
+        else
+            isStationnaire = @"Non";
         NSString *Latitude = [NSString stringWithFormat:@"%f", w.getDest.latitude];
         NSString *Longitude = [NSString stringWithFormat:@"%f", w.getDest.longitude];
         NSDictionary *tmp = [[NSDictionary alloc] initWithObjectsAndKeys:
                              vitesse, @"Vitesse",
                              isPriseImage, @"PriseImage",
+                             isStationnaire, @"PointStationnaire",
                              Latitude, @"Latitude",
                              Longitude, @"Longitude",
                              nil];
