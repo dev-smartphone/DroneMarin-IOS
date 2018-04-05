@@ -388,6 +388,8 @@ Modele *modele;
             NSString *vitesse = [NSString stringWithFormat:@"%f", waypoint.getVitesse];
             NSString *maTrame = [NSString stringWithFormat:@"$GPRMC,%@,A,%@,N,%@,W,%@,,1911194,E*68", date, latitude, longitude, vitesse];
             [waypoint setTrame:maTrame];
+            NSData *data = [maTrame dataUsingEncoding:NSUTF8StringEncoding];
+            [data writeToFile:@"/tmp/Trames.nmea" atomically:YES];
             NSLog(@"%@", maTrame);
         }
     }
